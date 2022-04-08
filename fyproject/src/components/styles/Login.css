@@ -1,0 +1,22 @@
+/* :root{
+    --primary:rgb(39, 38, 39);
+    --secondary:rgba(255, 254, 254, 0.65);
+} */
+
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+.watch{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:white;
+    font-size:35px;
+    font-family: 'Orbitron', sans-serif;;
+}
+
+.temp{
+    height: 99.8vh;
+    margin-top:-48px;
+    background: linear-gradient(135deg, var(--primary),var(--secondary));
+    
+}

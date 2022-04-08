@@ -1,0 +1,33 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+:root{
+    --primary:#56caf8d8;
+    --secondary:rgba(255, 255, 255, 0.801);
+}
+
+
+h1{
+    font-family: 'Kaushan Script',cursive;
+}
+    
+#login-main{
+    margin-right:20px;
+}
+
+.home{
+
+    height:99.9vh;
+    background: linear-gradient(135deg, var(--primary),var(--secondary));
+    
+}
+body{
+    background-image: url("../assets/service.svg");
+
+  height: 500px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-size: cover;
+
+     
+    
+    
+}
