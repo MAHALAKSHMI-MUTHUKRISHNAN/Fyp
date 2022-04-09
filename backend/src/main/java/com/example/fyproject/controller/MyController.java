@@ -26,12 +26,24 @@ public class MyController {
 		List<Users> allUser = getUser();
 		List<Users> onlyUser = new ArrayList<>();
 		for(Users u:allUser){
-			if(u.getRole().equals("admin")){
-				continue;
+			if(u.getRole().equals("user")){
+				onlyUser.add(u);
 			}
-			onlyUser.add(u);
+
 		}
 		return onlyUser;
+	}
+	@GetMapping("/getOnlyRetailer")
+	public List<Users> getOnlyRetailer(){
+		List<Users> allUser = getUser();
+		List<Users> onlyRetailer = new ArrayList<>();
+		for(Users u:allUser){
+			if(u.getRole().equals("retailer")){
+				onlyRetailer.add(u);
+			}
+
+		}
+		return onlyRetailer;
 	}
 	@PostMapping("/signup")
 	public String addUser(@RequestBody Users user,HttpSession session) {

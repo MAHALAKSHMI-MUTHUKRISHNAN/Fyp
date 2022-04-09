@@ -59,7 +59,7 @@ function LoginForm(){
     >
       {formik => (
         <div>
-          <h1 className='mt-4'style={{color:"white",fontWeight:"bold"}} >Login</h1>
+          <h1 className='mt-4'style={{color:"black",fontWeight:"bold"}} >Login</h1>
           <Form>
           
             <TextBar id="username" label="username" name="username" type="text" />

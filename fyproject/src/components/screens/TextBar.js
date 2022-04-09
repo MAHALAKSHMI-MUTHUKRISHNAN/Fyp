@@ -5,7 +5,7 @@ function TextBar ({ label, ...props }){
   const [field, meta] = useField(props);
   return (
     <div className="mb-2">
-      <label htmlFor={field.name} style={{color:"white",display:"flex",justifyContent:'flex-start',fontSize:17}}>{label}</label>
+      <label htmlFor={field.name} style={{color:"black",display:"flex",justifyContent:'flex-start',fontSize:17}}>{label}</label>
       <input
         className={`form-control shadow-none ${meta.touched && meta.error && 'is-invalid'}`}
         {...field} {...props}

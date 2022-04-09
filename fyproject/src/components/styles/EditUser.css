@@ -1,0 +1,28 @@
+/* :root{
+    --primary:rgb(39, 38, 39);
+    --secondary:rgba(255, 254, 254, 0.65);
+} */
+
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+
+
+.edit-temp{
+    height:100%;
+    margin-top:-48px;
+    background: linear-gradient(135deg, var(--primary),var(--secondary));
+    
+}
+
+.edit-user {
+    margin-top: -24px;
+}
+.edit-user form {
+    width: 500px;
+    margin: 0 auto;
+}
+.edit-user h1 {
+    text-align: center;
+}
+.ReactModal__Overlay {
+    background-color: rgba(255, 255, 255, 0) !important;
+}

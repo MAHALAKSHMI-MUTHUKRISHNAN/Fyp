@@ -52,6 +52,7 @@ public class UserServiceimpl implements UserServices {
         }
 	}
 
+
 	@Override
 	public Users editUser(Users user) {
 		Optional<Users> userTemp = this.dao.findById(user.getId());
