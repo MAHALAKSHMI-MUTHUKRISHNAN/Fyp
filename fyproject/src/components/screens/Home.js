@@ -82,7 +82,7 @@ const Search = () => {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                   <ListGroupItem>PHONE : {center.mobile}</ListGroupItem>
-                  <ListGroupItem>MAIL IDs : {center.email}</ListGroupItem>
+                  <ListGroupItem>MAIL ID : {center.email}</ListGroupItem>
                   <ListGroupItem>ADDRESS : {center.address}</ListGroupItem>
                 </ListGroup>
 
