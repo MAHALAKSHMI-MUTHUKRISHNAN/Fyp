@@ -33,7 +33,7 @@ const HomeRetail = () => {
     },[]);
     const [centers,setCenters]=useState([
     ]);
-    //const isCenterAdded = localStorage.getItem("isCenterAdded");
+    const isCenterAdded = localStorage.getItem("isCenterAdded");
     const deleteCenter=(value)=>{
         axiosObject.delete(`/deleteCenter/${value}`).then(
             (response)=>{
@@ -55,17 +55,18 @@ const HomeRetail = () => {
     <>
     <NavbarRetail/>
     <div className="home-body"style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
-  {/* {(!(isCenterAdded)) ? */}
+ {(!(isCenterAdded)) ? 
     <Link
                 exact
                 to="/admin/AddServiceCenter"
                 activeClassName="active"
                 id="addserviceCenterlink"
                 className="nav-links"
-              >
+              ><button className="btn btn-dark ">
                 Add center
+                </button>
               </Link>
-              {/* : */}
+              : 
               
         <div className="fixed-content">
     
@@ -103,7 +104,7 @@ const HomeRetail = () => {
         
       </Row>
       </div>
-{/* } */}
+ } 
      
     </div>
     </>

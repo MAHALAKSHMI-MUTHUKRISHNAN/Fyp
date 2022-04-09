@@ -9,30 +9,29 @@ import { Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Link } from "react-router-dom";
 import '../styles/Home.css';
-import NavbarUser from './NavbarUser';
-import CenterImages from "../assets/centerImages/CenterImages.js";
+import Navbar from './Navbar'
+import CenterImages from "../assets/centerImages/CenterImages";
 
-const HomeUser = () => {
-
+const HomeAdmin = () => {
    
     useEffect(()=>{
     document.title= "watchService || Home"
-   
     },[]);
-  
+    
+
   const handleClick = (value)=>{
     localStorage.setItem("centerType",JSON.stringify(value));
   }
+
   return (
     <>
-    <NavbarUser/>
+    <Navbar/>
     <div className="home-body"style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
     <Container className='text-center mt-4' style={{width:"40%"}}>
-        <Link id="viewreviewlink" to="/user/service"><button className="btn btn-info " style={{marginLeft:10}} onClick={()=>{handleClick(2)}}>AC</button></Link>
-        <Link id="viewreviewlink" to="/user/service"><button className="btn btn-info " style={{marginLeft:10}} onClick={()=>{handleClick(1)}}>Photo</button></Link>
-        </Container>   
-        
-           
+        <Link id="viewreviewlink" to="/admin/service"><button className="btn btn-info " style={{marginLeft:10}} onClick={()=>{handleClick(2)}}>AC</button></Link>
+        <Link id="viewreviewlink" to="/admin/service"><button className="btn btn-info " style={{marginLeft:10}} onClick={()=>{handleClick(1)}}>Photo</button></Link>
+        </Container> 
+    
         <div className="fixed-content">
         
       </div>
@@ -42,4 +41,4 @@ const HomeUser = () => {
   )
 }
 
-export default HomeUser;
+export default HomeAdmin
