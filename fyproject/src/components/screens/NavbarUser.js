@@ -14,7 +14,7 @@ function NavbarUser() {
       <nav className="navbar">
         <div className="nav-container">
           <NavLink exact to="/" id="landinglink" className="nav-logo">
-            Wrist Wear
+          Fix Mate
           </NavLink>
 
           <ul className={click ? "nav-menu active" : "nav-menu"}>
