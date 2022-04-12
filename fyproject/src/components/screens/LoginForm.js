@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Form} from 'formik';
+import { ErrorMessage,Formik, Form} from 'formik';
 import TextBar from './TextBar';
 import * as Yup from 'yup';
 import { Link } from "react-router-dom";
@@ -13,8 +13,6 @@ function LoginForm(){
       .required('Username is required'),
     password: Yup.string()
       .required('Password is required'),
-    role:Yup.string()
-    .required('role is required'),
   })
   const sendData=(data)=>{
     console.log("I'm here");
@@ -65,10 +63,20 @@ function LoginForm(){
             <TextBar id="username" label="username" name="username" type="text" />
             <TextBar id="password" label="password" name="password" type="password" />
             <TextBar id="role" label="role" name="role" type="text" />
+            {/* <div className="mb-2">
+      <label htmlFor="role" style={{color:"black",display:"flex",justifyContent:'flex-start',fontSize:17}}>Role</label>
+      <select name="role" id="role" className={`form-control shadow-none`}>
+  <option value="user" >User</option>
+  <option value="retailer">Retailer</option>
+  <option value="admin">Admin</option>
+</select>
+
+<ErrorMessage component="div" name="role" style={{color:"red",display:"flex"}}/>
+    </div> */}
             <span className="">
                   New User
                   <nav>
-                    <Link id="registerlink" to="/Register"><h4 style={{color:'white'}}>Signup</h4></Link>
+                    <Link id="registerlink" to="/Register"><h4 style={{color:'black'}}>Signup</h4></Link>
                   </nav>
                 </span>
             <button id="loginbutton" className="btn btn-dark mt-3" type="submit">Login</button>

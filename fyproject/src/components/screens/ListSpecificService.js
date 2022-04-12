@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosObject from "../../api/bootapi";
+
+import Navbar from "./Navbar";
 import NavbarUser from "./NavbarUser";
 import '../styles/Home.css';
 import Card from 'react-bootstrap/Card';
@@ -38,7 +40,20 @@ const ListSpecificService = () => {
     const [centers,setCenters]=useState([
     ]);
     const [filter,setFilter] = useState('');
-
+    const deleteCenter=(value)=>{
+      axiosObject.delete(`/deleteCenter/${value}`).then(
+          (response)=>{
+              console.log("center Deleted");
+              console.log(response);
+              refreshPage();
+          },(error)=>{
+              console.log(error);
+          }
+      )
+  }
+  const refreshPage=()=>{
+    window.location.reload(false);
+}
   const SearchText = (event) =>{
     setFilter(event.target.value);
   }
@@ -46,10 +61,14 @@ const ListSpecificService = () => {
       return Object.keys(item).some(key =>
         item[key].toString().toLowerCase().includes(filter.toString().toLowerCase())
     )});
-
+    const isAdmin = localStorage.getItem("isAdmin");
+    const isUser = localStorage.getItem("isUser");
   return (
     <>
-      <NavbarUser />
+    {isAdmin ?
+      <Navbar />:
+      <NavbarUser/>
+    }
       <div
         className="home-body"
         style={{
@@ -58,12 +77,12 @@ const ListSpecificService = () => {
           alignItems: "center",
         }}
       >
-         <Container className='text-center mt-4' style={{width:"40%"}}>
+        
+        <div>
+        <Container className='text-center mt-4' style={{width:"100%"}}>
           <Form.Control  id="searchbar" placeholder="Search" value = {filter} onChange={SearchText.bind(this)} />
 
         </Container>
-        <div className="fixed-content">
-
         <Row>
         {dataSearch.map((center) => {<dataSearch key ={center.id}/>
           return (
@@ -71,7 +90,7 @@ const ListSpecificService = () => {
             <Col style={{ padding: '2rem' }} >
                 
               <Card style={{ width: '18rem',borderRadius:20 ,marginRight:5,marginLeft:5}}>
-                    <Card.Img variant="top" src={CenterImages[center.imageurl]} style={{ width: '10rem', height: '10rem',marginLeft:"20%",marginTop:10,borderRadius:"50%" }} />
+                    <Card.Img variant="top" src={center.imageurl} style={{ width: '10rem', height: '10rem',marginLeft:"20%",marginTop:10,borderRadius:"50%" }} />
                 <Card.Body>
                   <Card.Title>{center.name}</Card.Title>
                   <Card.Text>
@@ -83,11 +102,21 @@ const ListSpecificService = () => {
                   <ListGroupItem>MAIL ID : {center.email}</ListGroupItem>
                   <ListGroupItem>ADDRESS : {center.address}</ListGroupItem>
                 </ListGroup>
-
-                <Card.Body style={{alignItems:"center"}}>
+{
+  isAdmin ?
+<Card.Body style={{alignItems:"center"}}>
+                <Link id="editServicecenterLink" to="/admin/edit"><button className="btn btn-dark " onClick={()=>{throwDetails(center)}} style={{marginRight:10}}>Edit</button></Link>
+                <Link id="deleteServicecenterLink" to="/admin/home"><button id="deleteServiceCenterButton" className="btn btn-danger" onClick={()=>{
+                    deleteCenter(center.id);
+                }} >Remove</button></Link>
+                </Card.Body>
+  :
+  <Card.Body style={{alignItems:"center"}}>
                 <Link id="booklink" to="/user/Appointment"><button className="btn btn-success " onClick={()=>{throwDetails(center)}}>Book</button></Link>
                 <Link id="viewreviewlink" to="/user/viewscreview"><button className="btn btn-info "style={{marginLeft:10}} onClick={()=>{throwID(center)}}> Reviews</button></Link>
                 </Card.Body>
+}
+                
               </Card>
              
             </Col>    

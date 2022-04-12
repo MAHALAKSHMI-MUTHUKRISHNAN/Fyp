@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Form} from 'formik';
+import {ErrorMessage, Formik, Form} from 'formik';
 import TextBar from './TextBar';
 import * as Yup from 'yup';
 import { Link } from "react-router-dom";
@@ -23,10 +23,9 @@ function RegisterForm(){
       .email('Email is invalid')
       .required('Email is required'),
     password: Yup.string()
+    .required('Password is required')
       .min(6, 'Password must be at least 6 charaters'),
-    role: Yup.string()
-      .required('Password is required')
-      .required('username is Required'),
+    
     
   })
   const sendData=(data)=>{
@@ -83,7 +82,17 @@ function RegisterForm(){
           
             <TextBar id="name" label="Name" name="name" type="text" />
             <TextBar id="username" label="Username" name="username" type="text" />
-            <TextBar id="role" label="Role" name="role" type="text" />
+           <TextBar id="role" label="Role" name="role" type="text" /> 
+            {/* <div className="mb-2">
+      <label htmlFor="role" style={{color:"black",display:"flex",justifyContent:'flex-start',fontSize:17}}>Role</label>
+      <select name="role" id="role" className={`form-control shadow-none`}>
+  <option value="user" >User</option>
+  <option value="retailer">Retailer</option>
+</select>
+
+<ErrorMessage component="div" name="role" style={{color:"red",display:"flex"}}/>
+    </div> */}
+  
             <TextBar id="mobilenumber" label="Mobile" name="mobile" type="text" />
             <TextBar id="email" label="Email" name="email" type="email" />
             <TextBar id="password" label="password" name="password" type="password" />

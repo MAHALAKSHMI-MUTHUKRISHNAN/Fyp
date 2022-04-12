@@ -18,6 +18,7 @@ import UserDetails from './components/screens/UserDetails';
 import RetailerDetails from './components/screens/RetailerDetails';
 import UnAuthorized from './components/screens/UnAuthorized';
 import HomeAdmin from './components/screens/HomeAdmin';
+import EditCenter from './components/screens/EditCenter';
 function App() {
   return (
     <div>
@@ -35,6 +36,7 @@ function App() {
         <RetailerRoute path="/retail/home" exact component={HomeRetail}></RetailerRoute>
         <AdminRoute path="/admin/AddServiceCenter" exact component={AddCenter}></AdminRoute>
         <RetailerRoute path="/retail/AddServiceCenter" exact component={AddCenter}></RetailerRoute>
+        <AdminRoute path="/admin/edit" exact component={EditCenter}></AdminRoute>
         <Route path="/unauthorized" exact component={UnAuthorized}></Route>
         <Route path="/**" exact component={Error}></Route>
      </Switch>

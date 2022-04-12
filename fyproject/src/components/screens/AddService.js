@@ -86,7 +86,7 @@ function AddServiceForm(){
           
             <TextBar label="Center Id"  placeholder="Enter the id" name="id" type="number" id="addCenterId" />
             <TextBar label="Name"  placeholder="Enter the Name" name="name" type="text" id="addCenterName" />
-            <TextBar label="Service Type"  placeholder="Enter the Service Type" name="sctype" type="number" id="addCenterType" />
+            <TextBar label="Service Type"  placeholder="1-AC, 2-Paint, 3-Salon, 4-Car Service,5-Home Cleaning,6-Plumbing" name="sctype" type="text" id="addCenterType" />
             <TextBar label="Mobile"  placeholder="Enter the Phone number" name="mobile" type="text" id="addCenterNumber" />
             <TextBar label="Address"  placeholder="Enter the address" name="address" type="text" id="addCenterAddress" />
             <TextBar label="ImageUrl"  placeholder="Enter the Image Url" name="imageurl" type="text" id="addCenterImageUrl" />
