@@ -1,6 +1,7 @@
 package com.example.fyproject.controller;
 
 import com.example.fyproject.entity.Appointment;
+import com.example.fyproject.entity.ServiceCenter;
 import com.example.fyproject.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,11 @@ public class AppointmentController {
     @PutMapping("/editAppointment")
     public Appointment editAppointment(@RequestBody Appointment appointment){
         return this.Appointments.editAppointment(appointment);
+    }
+
+    @GetMapping("/getAppointmentbyCenter/{id}")
+    public List<Appointment> getAppointmentbyCenter(@PathVariable String id){
+        return this.Appointments.getAppointmentbyCenter(Long.parseLong(id));
     }
 
     @PutMapping("/payment/{id}")

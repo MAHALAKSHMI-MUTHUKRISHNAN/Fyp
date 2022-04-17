@@ -10,6 +10,7 @@ public interface AppointmentService {
 
     List<Appointment> allAppointments();
     List<Appointment> getUserAppointments();
+    List<Appointment> getAppointmentbyCenter(long id);
     Appointment editAppointment(Appointment appointment);
 
     Appointment deleteAppointment(long id);

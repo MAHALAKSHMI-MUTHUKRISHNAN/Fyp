@@ -1,0 +1,9 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  .root{
+    --primary:#56caf8d8;
+    --secondary:rgba(255, 255, 255, 0.801);
+}

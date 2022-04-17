@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 function EditServiceForm(){
 
-  let center=JSON.parse(localStorage.getItem('data'));
+  let center=JSON.parse(localStorage.getItem('SelectedCenter'));
   
   const validate = Yup.object({
     id:Yup.string()
@@ -33,6 +33,8 @@ function EditServiceForm(){
       .max(250, 'Must be 250 characters or less')
       .required('Description is required'),
   })
+  const isAdmin = localStorage.getItem("isAdmin");
+  const isRetailer = localStorage.getItem("isRetailer");
   const sendData=(data)=>{
     axiosObject.put(`/updateCenter`,data).then(
       (response)=>{
@@ -41,7 +43,10 @@ function EditServiceForm(){
         }else if(response.data==="success"){
           localStorage.removeItem('data');
           toast.success('center edited successfully',{autoClose: 2000});
+          if(isAdmin)
           setTimeout(() => {  window.location.replace('/admin/home'); }, 2000);
+          else if(isRetailer)
+          setTimeout(() => {  window.location.replace('/retail/home'); }, 2000);
         }
       },(error)=>{
         console.log(error);
