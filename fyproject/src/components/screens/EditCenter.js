@@ -1,15 +1,18 @@
 import React, {useEffect} from 'react';
 import EditServiceForm from './EditServiceForm';
 import NavBar from './Navbar';
-function EditCenter(){
-    let center =JSON.parse( localStorage.getItem('data'));
+import NavBarRetail from './NavbarRetail';
 
+function EditCenter(){
+    let center =JSON.parse( localStorage.getItem('SelectedCenter'));
+    const isAdmin = localStorage.getItem("isAdmin");
     useEffect(() => {
         document.title = "WatchService || EditCenter";
       },[]);
     return(
         <>
-        <NavBar/>
+        {isAdmin ?<NavBar/>:<NavBarRetail/>
+        }
         <div className='edit-temp'>
         <div className="container mt-5 ">
             <div className="row" style={{justifyContent:'space-around'}}>

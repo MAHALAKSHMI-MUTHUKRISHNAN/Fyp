@@ -30,10 +30,10 @@ function NavBarRetail() {
                 Home
               </NavLink>
             </li>
-            {/* <li className="nav-item">
+             <li className="nav-item">
               <NavLink
                 exact
-                to="/admin/AddServiceCenter"
+                to="/retail/AddServiceCenter"
                 activeClassName="active"
                 id="addserviceCenterlink"
                 className="nav-links"
@@ -41,11 +41,12 @@ function NavBarRetail() {
               >
                 Add center
               </NavLink>
-            </li> */}
+            </li> 
+            {/*
             <li className="nav-item">
               <NavLink
                 exact
-                to="/admin/allbooking"
+                to="/retail/scbooking"
                 activeClassName="active"
                 id="viewAllBookingLink"
                 className="nav-links"
@@ -54,7 +55,7 @@ function NavBarRetail() {
                 All Booking
               </NavLink>
             </li>
-            {/* <li className="nav-item">
+             <li className="nav-item">
               <NavLink
                 exact
                 to="/admin/usermanagement"

@@ -10,6 +10,7 @@ import com.example.fyproject.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,7 +21,8 @@ public class AppointmentServiceimpl implements com.example.fyproject.service.App
 
     @Autowired
     private UserDao dao;
-
+    @Autowired
+    private ServiceCenterServices serviceCenterServices;
     @Autowired
     private ServiceCenterDao centerDao;
 
@@ -32,6 +34,7 @@ public class AppointmentServiceimpl implements com.example.fyproject.service.App
         List<ServiceCenter> centers = this.centerDao.findAll();
         for(ServiceCenter x:centers){
             if(Objects.equals(x.getId(),appointment.getSc_id())){
+                System.out.println(appointment.getSc_id());
                 x.getAppointments().add(appointment);
                 this.centerDao.save(x);
             }
@@ -60,6 +63,27 @@ public class AppointmentServiceimpl implements com.example.fyproject.service.App
         return result;
     }
 
+
+    @Override
+    public List<Appointment> getAppointmentbyCenter(long id) {
+         List<ServiceCenter> center = this.serviceCenterServices.viewAllCenter();
+        List<Appointment> appointments = new ArrayList<>();
+        for(ServiceCenter x:center){
+            if(x.getId()==id){
+                appointments = x.getAppointments();
+            }
+        }
+            List<Appointment> appointmentsbycenter = new ArrayList<>();
+
+        for(Appointment y:appointments){
+
+            appointmentsbycenter.add(y);
+        }
+
+            return appointmentsbycenter;
+
+    }
+
     @Override
     public Appointment editAppointment(Appointment appointment) {
         appointment.setPaymentDone("no");
@@ -84,6 +108,7 @@ public class AppointmentServiceimpl implements com.example.fyproject.service.App
     public Appointment editPayment(long id) {
         List<Appointment> appointments = getUserAppointments();
         Appointment appointment = new Appointment();
+
         for(Appointment x:appointments){
             if(x.getBook_id()==id){
                 x.setPaymentDone("yes");
