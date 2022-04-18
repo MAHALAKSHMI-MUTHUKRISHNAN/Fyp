@@ -32,7 +32,9 @@ public class Users {
 	@JoinColumn(name="user_id", referencedColumnName = "id")
 	List<com.example.fyproject.entity.Appointment> appointments = new ArrayList<>();
 
-
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+	@JoinColumn(name="user_id", referencedColumnName = "id")
+	List<com.example.fyproject.entity.ServiceCenter> serviceCenters = new ArrayList<>();
 //	public String getPassword() {
 //		return password;
 //	}

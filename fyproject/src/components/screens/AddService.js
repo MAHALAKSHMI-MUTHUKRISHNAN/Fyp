@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { Formik, Form} from 'formik';
 import TextBar from './TextBar';
 import * as Yup from 'yup';
@@ -7,6 +7,22 @@ import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
 function AddServiceForm(){
+  const getUser=()=>{
+    axiosObject.get(`/mydetails`).then(
+        (response)=>{
+          console.log("user fetched");
+          setUser(response.data);
+        },(error)=>{
+          console.log(error);
+        }
+      );
+  };
+
+  const [user,setUser] = useState([{"id":1,"mobile":"4534332323"}]);
+  useEffect(() => {
+    document.title = "WatchService || AddCenter";
+    getUser();
+  },[]);
   const validate = Yup.object({
     id:Yup.string()
       .required('Id is required'),
@@ -61,6 +77,7 @@ function AddServiceForm(){
     <ToastContainer/>
     <Formik
       initialValues={{
+        u_id:user.id,
         id:'',
         name: '',
         sctype: '',

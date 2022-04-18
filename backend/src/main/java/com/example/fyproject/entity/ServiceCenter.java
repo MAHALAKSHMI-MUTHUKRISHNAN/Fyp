@@ -17,6 +17,10 @@ public class ServiceCenter {
 	@Id
 	//@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
+
+	@Transient
+	private long u_id;
+
 	private String name;
 
 	private long sctype;
@@ -29,6 +33,8 @@ public class ServiceCenter {
 	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
 	@JoinColumn(name="center_id", referencedColumnName = "id")
 	List<com.example.fyproject.entity.Appointment> appointments = new ArrayList<>();
+
+
 
 
 //	@Override

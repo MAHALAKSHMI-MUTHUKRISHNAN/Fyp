@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosObject from "../../api/bootapi";
-import NavbarUser from './NavbarUser';
+import NavbarRetail from './NavbarRetail';
 import Table from '@mui/material/Table';
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import '../styles/MyBookings.css';
@@ -37,10 +37,10 @@ function ViewSCBooking(){
     
         return(
      <>
-         <NavbarUser/>
+         <NavbarRetail/>
      <div className="home-body"style={{color:"black",margin:'auto',fontWeight:'bolder'}}>
        
-         <h1 style={{textAlign:'center',paddingTop:'10%'}}>Bookings</h1>
+         <h1 style={{textAlign:'center',paddingTop:'10%'}}>Bookings </h1>
          
          <Table style={{width:'50%', margin:'auto'}}>
         

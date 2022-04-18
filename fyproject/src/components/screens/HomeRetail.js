@@ -19,7 +19,7 @@ const HomeRetail = () => {
     localStorage.setItem("centerId",JSON.stringify(value));
   }
     const getAllCenters=()=>{
-      axiosObject.get(`/viewAllCenter`).then(
+      axiosObject.get(`/getCenters/user`).then(
             (response)=>{
               console.log("centers fetched");
               setCenters(response.data);
