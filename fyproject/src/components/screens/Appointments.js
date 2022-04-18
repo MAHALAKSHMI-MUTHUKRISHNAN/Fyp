@@ -59,7 +59,7 @@ function Appoinments(){
       (response)=>{
         console.log(response);
         localStorage.removeItem('SelectedCenter');
-       // window.location.replace("/user/mybooking");
+        window.location.replace("/user/mybooking");
       
       },(error)=>{
         console.log(error);
