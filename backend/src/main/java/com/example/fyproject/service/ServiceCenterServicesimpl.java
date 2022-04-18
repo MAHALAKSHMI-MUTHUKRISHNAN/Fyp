@@ -25,6 +25,7 @@ public class ServiceCenterServicesimpl implements com.example.fyproject.service.
 	@Override
 	public String addCenter(ServiceCenter center) {
 		List<ServiceCenter> centers = viewAllCenter();
+
 		for(ServiceCenter x : centers){
 			if(x.getId()==center.getId()){
 				return "id";
@@ -34,6 +35,14 @@ public class ServiceCenterServicesimpl implements com.example.fyproject.service.
 			}
 		}
 		this.centerDao.save(center);
+		System.out.println(center.getU_id());
+		List<Users> users = this.dao.findAll();
+		for(Users y:users){
+			if(Objects.equals(y.getId(),center.getU_id())){
+				y.getServiceCenters().add(center);
+				this.dao.save(y);
+			}
+		}
 		return "success";
 	}
 	@Override
@@ -43,6 +52,14 @@ public class ServiceCenterServicesimpl implements com.example.fyproject.service.
 		System.out.println(currentUserLogin.get());
 		
 		return centerDao.findAll();
+	}
+
+	@Override
+	public List<ServiceCenter> getUserCenters() {
+		Users user = dao.findByUsername(SecurityUtils.getCurrentUserLogin().get());
+		List<ServiceCenter> result = user.getServiceCenters();
+
+		return result;
 	}
 
 
