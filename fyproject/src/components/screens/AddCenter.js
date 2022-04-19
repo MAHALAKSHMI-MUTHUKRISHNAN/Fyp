@@ -1,6 +1,7 @@
-import React, {useState,useEffect} from 'react';
-import watchImg from '../assets/watch.png';
+import React, {useEffect} from 'react';
 import '../styles/AddCenter.css';
+
+import AddServiceAdmin from './AddServiceAdmin';
 import AddServiceForm from './AddService';
 import NavBar from './Navbar';
 import NavBarRetail from './NavbarRetail';
@@ -20,7 +21,11 @@ function AddCenter(){
             <div className="row" style={{justifyContent:'space-around'}}>
                
                 <div className="col-md-5 text-center">
+                {isAdmin ?
+        
+                    <AddServiceAdmin/>:
                     <AddServiceForm/>
+                    }
                 </div>
 
             </div>
