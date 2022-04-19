@@ -24,12 +24,17 @@ public class ServiceCenterController {
 	public String addCenter(@RequestBody ServiceCenter center) {
 		Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
 		//System.out.println("add Center request isAdmin-> "+currentUserLogin.get().equals("admin"));
-		//if(currentUserLogin.get().equals("admin")){
-		Users user = dao.findByUsername(SecurityUtils.getCurrentUserLogin().get());
-		center.setU_id(user.getId());
-		System.out.println(center.getU_id());
-			System.out.println(currentUserLogin.get());
+		if(currentUserLogin.get().equals("admin")){
 			return this.centerService.addCenter(center);
+		}else{
+			Users user = dao.findByUsername(SecurityUtils.getCurrentUserLogin().get());
+			center.setU_id(user.getId());
+			return this.centerService.addCenter(center);
+		}
+
+		//System.out.println(center.getU_id());
+			//System.out.println(currentUserLogin.get());
+		
 		//}else {
 		//	return null;
 		//}

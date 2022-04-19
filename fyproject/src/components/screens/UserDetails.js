@@ -76,6 +76,7 @@ function UserDetails() {
     <><NavBar /><div className="App" id ="user-management">
           <table border>
               <tr>
+              <th>User ID</th>
                   <th>Name</th>
                 
                   <th>Email</th>
@@ -86,6 +87,7 @@ function UserDetails() {
                   return (
                     <>
                       <tr key={key}>
+                      <td>{val.id}</td>
                           <td>{val.name}</td>
                           <td>{val.email}</td>
                           <td colSpan={2}>{val.mobile}</td>
