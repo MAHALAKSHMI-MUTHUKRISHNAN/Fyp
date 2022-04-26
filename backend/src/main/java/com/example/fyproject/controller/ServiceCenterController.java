@@ -34,7 +34,7 @@ public class ServiceCenterController {
 
 		//System.out.println(center.getU_id());
 			//System.out.println(currentUserLogin.get());
-		
+
 		//}else {
 		//	return null;
 		//}

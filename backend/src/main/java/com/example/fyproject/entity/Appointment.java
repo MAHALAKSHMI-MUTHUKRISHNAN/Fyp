@@ -23,14 +23,16 @@ public class Appointment {
 
 
     private String productName;
-    private String purchaseDate;
     private String productModelNo;
     private String problemStatement;
     private String contactNumber;
     private String bookingDate;
     private String bookingTime;
-
+    private String bookingStatus;
+    private String charges;
+    private String finalPay;
     private String paymentDone;
+    private String serviceStatus;
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name="bookId")

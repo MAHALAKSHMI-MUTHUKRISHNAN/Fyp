@@ -9,6 +9,9 @@ import EditRating from "./EditRating";
 import EditBooking from "./EditBooking";
 import '../styles/MyBookings.css';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function ViewUserBookings(){
     const [data,setData] = useState([
@@ -71,7 +74,18 @@ function ViewUserBookings(){
     const handlepay=()=>{
         window.location.replace("/user/payment");
     }
-
+    const handleservice=()=>{
+        let id = localStorage.getItem('appId');
+        axiosObject.put(`/serviceend/${id}`).then(
+          (response)=>{
+            localStorage.removeItem("appId");
+            toast.success('Thanks for making service with us',{autoClose: 2000});
+            setTimeout(() => { window.location.replace('/user/mybooking'); }, 2000);
+          },(error)=>{
+            console.log(error);
+          }
+        )
+      }
     const[show,setShow]=useState(false);
     const[show1,setShow1]=useState(false);
     const[show2,setShow2]=useState(false);
@@ -98,6 +112,7 @@ function ViewUserBookings(){
     // console.log(today);
         return(
      <>
+     <ToastContainer/>
          <NavbarUser/>
      <div className="home-body"style={{color:"black",margin:'auto',fontWeight:'bolder'}}>
        
@@ -121,41 +136,76 @@ function ViewUserBookings(){
                                 <TableCell>{val.productName}</TableCell>
                                 <TableCell>{val.bookingDate}</TableCell>
                                 <TableCell>{val.bookingTime}</TableCell>
-                               { val.bookingDate <= today  && val.paymentDone==="no"
+                               {val.bookingStatus ==="no" ?
+                               <TableCell>
+<p>Wait for confirmation from the service</p>
+                               </TableCell>:
+                               val.bookingStatus ==="reject" ?
+                               <TableCell>
+<p>Sorry, your booking has been cancelled by the service provider</p>
+                               </TableCell>:
+                               val.bookingStatus ==="accept"  && val.paymentDone==="no"
                             ?
                                <TableCell>
                                 
-                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id);  handlepay();} }>payment</button>
+                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id);  handlepay();} }>Make Initial Payment to confirm your service </button>
                                
                                </TableCell>
                                 
-                           :  val.bookingDate <= today  && val.paymentDone==="yes" && val.rating===null
+                           :  
+                           val.bookingStatus ==="accept" && val.bookingDate > today  && val.paymentDone==="yes"
                            ?
                            <TableCell>
                                    
-                           <button style = {{backgroundColor:"#00C897",borderRadius:5,color:"white"}} id="reviewappointmentbutton" onClick={() => {handleShow1();setModalData(val)} }data-toggle="modal">Rate us</button>
-                       
-                            </TableCell>
-
-                           :val.bookingDate <= today  && val.paymentDone==="yes" && val.rating!=null
-                           ? 
-                           <TableCell>
-                                <button style = {{backgroundColor:"#00C897",borderRadius:5,color:"black"}} id="reviewappointmentbutton" onClick={() => {handleShow2();setModalData(val.rating)} }data-toggle="modal">Your Review</button>
-                                <button style = {{borderColor:"#FD5D5D",borderRadius:5,color:"#FD5D5D",marginLeft:7}} onClick={()=>{deleteRating(val.book_id);}} >Delete review</button>
-                           </TableCell>
-                           :<TableCell>
-                                    <OverlayTrigger
+                           <OverlayTrigger
                                     overlay={
                                         <Tooltip id={'tooltip-top'}>
                                             Edit
                                         </Tooltip>
                                     }>
-                                        <Button id="editappointmentbutton" onClick={()=>{handleShow();setModalData(val)}} data-toggle="modal"><i className="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></Button>
+                                        <Button id="editappointmentbutton" onClick={()=>{handleShow();setModalData(val)}} data-toggle="modal"><i className="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>Edit</Button>
                                         </OverlayTrigger>
-                                <button style = {{ marginLeft:20}} id="deleteappointmentbutton" onClick={() => remove(val.book_id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                                <button style = {{ marginLeft:20}} id="deleteappointmentbutton" onClick={() => remove(val.book_id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i>Delete</button>
+                          
                             </TableCell>
-                              
-                           
+
+                           :val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "no"
+                           ? 
+                           <TableCell>
+                               <p>Wait for your service to be started</p>
+                                 </TableCell> 
+                                 :val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "started"
+                                 ? 
+                                 <TableCell>
+                                     <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"black"}} id="servicebutton" onClick={() => {localStorage.setItem("appId",val.book_id);  handleservice();} }>Click when your service is completed</button>
+                               
+                                       </TableCell> 
+                                        : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended" && val.charges === "null"
+                                        ? 
+                                        <TableCell>
+                                           <p>Wait for the Final service charges</p>
+                                              </TableCell>
+                                              : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended" && val.charges !== "null" && val.finalPay === "no"
+                                              ? 
+                                              <TableCell>
+                                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id); localStorage.setItem("finalPay",val.charges);localStorage.setItem("isFinalPay","true"); handlepay();} }>Final Payment </button>
+                               
+                                                    </TableCell>
+                                 : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended"  && val.charges !=null && val.finalPay === "yes" && val.rating ==null
+                           ? 
+                           <TableCell>
+                                <button style = {{backgroundColor:"#00C897",borderRadius:5,color:"white"}} id="reviewappointmentbutton" onClick={() => {handleShow1();setModalData(val)} }data-toggle="modal">Rate us</button>
+                          
+                                 </TableCell>
+                          :val.bookingStatus =="accept" && val.bookingDate <= today  && val.paymentDone==="yes"&& val.serviceStatus === "ended" && val.charges != null && val.finalPay === "yes" && val.rating!=null
+                             ? <TableCell>
+                                  <button style = {{backgroundColor:"#00C897",borderRadius:5,color:"black"}} id="reviewappointmentbutton" onClick={() => {handleShow2();setModalData(val.rating)} }data-toggle="modal">Your Review</button>
+                                <button style = {{borderColor:"#FD5D5D",borderRadius:5,color:"#FD5D5D",marginLeft:7}} onClick={()=>{deleteRating(val.book_id);}} >Delete review</button>
+                          
+                              </TableCell>:
+                              <TableCell>
+
+                              </TableCell>
                                 }
                                   </TableRow>
                                 )})

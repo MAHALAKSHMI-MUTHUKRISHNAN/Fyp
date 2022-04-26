@@ -25,6 +25,8 @@ import AllBookings from './components/screens/AllBookings';
 import ViewSCReview from './components/screens/ViewSCReview';
 import Appoinments from './components/screens/Appointments';
 import ViewSCBooking from './components/screens/ViewSCBooking';
+import Payment from './components/screens/Payment';
+import CreditCardForm from './components/screens/CreditCardForm';
 function App() {
   return (
     <div>
@@ -32,6 +34,7 @@ function App() {
      <Switch>
      <Route path="/" exact component={Mainpage}></Route>
      <Route path="/Login" component={Login}></Route>
+     <UserRoute path="/user/payment" component={CreditCardForm}></UserRoute>
         <Route path="/Register" exact component={Register}></Route>
         <AdminRoute path="/admin/home" exact component={HomeAdmin}></AdminRoute>
         <UserRoute path="/user/home" exact component={HomeUser}></UserRoute>

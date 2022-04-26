@@ -96,25 +96,34 @@ const ListSpecificService = () => {
                   <Card.Text>
                   {center.details}
                   </Card.Text>
-                </Card.Body>
+                 </Card.Body>
+                  {
+  isAdmin ?
+  <>    
                 <ListGroup className="list-group-flush">
                   <ListGroupItem>PHONE : {center.mobile}</ListGroupItem>
                   <ListGroupItem>MAIL ID : {center.email}</ListGroupItem>
                   <ListGroupItem>ADDRESS : {center.address}</ListGroupItem>
                 </ListGroup>
-{
-  isAdmin ?
+
 <Card.Body style={{alignItems:"center"}}>
                 <Link id="editServicecenterLink" to="/admin/edit"><button className="btn btn-dark " onClick={()=>{throwDetails(center)}} style={{marginRight:10}}>Edit</button></Link>
                 <Link id="deleteServicecenterLink" to="/admin/home"><button id="deleteServiceCenterButton" className="btn btn-danger" onClick={()=>{
                     deleteCenter(center.id);
                 }} >Remove</button></Link>
                 </Card.Body>
+                </>
   :
+  <>
+  <ListGroup className="list-group-flush">
+                  
+                  <ListGroupItem>ADDRESS : {center.address}</ListGroupItem>
+                </ListGroup>
   <Card.Body style={{alignItems:"center"}}>
                 <Link id="booklink" to="/user/Appointment"><button className="btn btn-success " onClick={()=>{throwDetails(center)}}>Book</button></Link>
                 <Link id="viewreviewlink" to="/user/viewscreview"><button className="btn btn-info "style={{marginLeft:10}} onClick={()=>{throwID(center)}}> Reviews</button></Link>
                 </Card.Body>
+                </>
 }
                 
               </Card>

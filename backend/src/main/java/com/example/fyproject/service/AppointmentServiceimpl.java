@@ -29,6 +29,10 @@ public class AppointmentServiceimpl implements com.example.fyproject.service.App
     @Override
     public Appointment addAppointment(Appointment appointment) {
         appointment.setPaymentDone("no");
+        appointment.setBookingStatus("no");
+        appointment.setServiceStatus("no");
+        appointment.setFinalPay("no");
+        appointment.setCharges("null");
         this.appointmentDao.save(appointment);
         //adding to center
         List<ServiceCenter> centers = this.centerDao.findAll();
@@ -86,8 +90,118 @@ public class AppointmentServiceimpl implements com.example.fyproject.service.App
 
     @Override
     public Appointment editAppointment(Appointment appointment) {
-        appointment.setPaymentDone("no");
+        appointment.setPaymentDone("yes");
+        appointment.setBookingStatus("accept");
+        appointment.setServiceStatus("no");
+        appointment.setCharges("null");
+        appointment.setFinalPay("no");
         this.appointmentDao.save(appointment);
+        return appointment;
+    }
+
+    @Override
+    public Appointment editBookingStatusAccept(long id) {
+        List<Appointment> appointments = allAppointments();
+        Appointment appointment = new Appointment();
+        System.out.println(id);
+        System.out.println(appointments);
+
+        for(Appointment x:appointments){
+            System.out.println(x.getBook_id());
+            if(x.getBook_id()==id){
+                x.setBookingStatus("accept");
+                appointment=x;
+                this.appointmentDao.save(appointment);
+                System.out.println(x.getBookingStatus());
+            }
+        }
+
+        return appointment;
+    }
+
+    @Override
+    public Appointment editServiceStarted(long id) {
+        List<Appointment> appointments = allAppointments();
+        Appointment appointment = new Appointment();
+        System.out.println(id);
+        System.out.println(appointments);
+
+        for(Appointment x:appointments){
+            System.out.println(x.getBook_id());
+            if(x.getBook_id()==id){
+                x.setServiceStatus("started");
+                appointment=x;
+                this.appointmentDao.save(appointment);
+                System.out.println(x.getBookingStatus());
+            }
+        }
+
+        return appointment;
+    }
+
+    @Override
+    public Appointment editServiceEnded(long id) {
+        List<Appointment> appointments = allAppointments();
+        Appointment appointment = new Appointment();
+        System.out.println(id);
+        System.out.println(appointments);
+
+        for(Appointment x:appointments){
+            System.out.println(x.getBook_id());
+            if(x.getBook_id()==id){
+                x.setServiceStatus("ended");
+                appointment=x;
+                this.appointmentDao.save(appointment);
+                System.out.println(x.getBookingStatus());
+            }
+        }
+
+        return appointment;
+    }
+
+    @Override
+    public Appointment editBookingStatusReject(long id) {
+        List<Appointment> appointments = allAppointments();
+        Appointment appointment = new Appointment();
+        System.out.println(id);
+        System.out.println(appointments);
+
+        for(Appointment x:appointments){
+            System.out.println(x.getBook_id());
+            if(x.getBook_id()==id){
+                x.setBookingStatus("reject");
+                appointment=x;
+                this.appointmentDao.save(appointment);
+                System.out.println(x.getBookingStatus());
+            }
+        }
+
+        return appointment;
+    }
+
+    @Override
+    public Appointment editCharges(Appointment appointment) {
+        appointment.setPaymentDone("yes");
+        appointment.setBookingStatus("accept");
+        appointment.setServiceStatus("ended");
+        this.appointmentDao.save(appointment);
+        return appointment;
+    }
+
+    @Override
+    public Appointment editFinalPay(long id) {
+        List<Appointment> appointments = allAppointments();
+        Appointment appointment = new Appointment();
+        for(Appointment x:appointments){
+            System.out.println(x.getBook_id());
+            if(x.getBook_id()==id){
+                x.setFinalPay("yes");
+                appointment=x;
+                this.appointmentDao.save(appointment);
+
+            }
+        }
+
         return appointment;
     }
 

@@ -36,12 +36,7 @@ function Appoinments(){
     //   .min(10,'should be 10 number')
     //   .max(10,'should be 10 number')
     //   .required('Mobile Number is Required'),
-    purchaseDate: Yup.date()
-      .transform((curr, orig) => orig === '' ? null : curr)
-      .required('Date is required')
-      .nullable()
-      .max(new Date(), "Purchase date should be today or before!")
-      ,
+    
     bookingDate: Yup.date()
     .transform((curr, orig) => orig === '' ? null : curr)
     .required('Date is required')
@@ -78,7 +73,6 @@ function Appoinments(){
         productName: '',
         productModelNo: '',
         contactNumber:user.mobile,
-        purchaseDate: '',
         bookingDate:'',
         bookingTime:'',
         problemStatement:  '',
@@ -109,7 +103,6 @@ function Appoinments(){
                   <TextBar id="productname" label="Name of Product" placeholder="Enter product name" name="productName" type="text" />
                   <TextBar id="modelnumber" label="Model Number" placeholder="Enter model number" name="productModelNo" type="text" />
                   <TextBar id="contactnumber" label="Mobile" name="contactNumber" type="text" />
-                  <TextBar id="purchasedate" label="Date of Purchase" name="purchaseDate" type="date" />
                   <TextBar id="bookingdate" label="Date of booking" name="bookingDate" type="date" />
                   <TextBar id="bookingtime" label="Time of booking" placeholder="choose time in 24hr format" name="bookingTime" type="time" />
                   <TextBar id="problemstatement" label="Problem" placeholder="Description about problem" name="problemStatement" type="text" style={{height:"80px"}}/>
