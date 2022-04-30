@@ -43,6 +43,8 @@ function AllBookings(){
          <TableCell>Product Name</TableCell>
          <TableCell>Date</TableCell>
          <TableCell>Time</TableCell>
+         <TableCell>Booking Status</TableCell>
+         <TableCell>Initial Payment Status</TableCell>
          </TableHead>
                     <TableBody>
                        {
@@ -53,6 +55,8 @@ function AllBookings(){
                                 <TableCell>{val.productName}</TableCell>
                                 <TableCell>{val.bookingDate}</TableCell>
                                 <TableCell>{val.bookingTime}</TableCell>
+                                <TableCell>{val.bookingStatus}</TableCell>
+                                <TableCell>{val.paymentDone}</TableCell>
                                 </TableRow>
                                 )})
                        }

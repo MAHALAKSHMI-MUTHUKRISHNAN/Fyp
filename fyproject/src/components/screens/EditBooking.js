@@ -17,12 +17,6 @@ function EditBooking({booking}){
       .min(10,'should be 10 number')
       .max(10,'should be 10 number')
       .required('Mobile Number is Required'),
-    purchaseDate: Yup.date()
-      .transform((curr, orig) => orig === '' ? null : curr)
-      .required('Date is required')
-      .nullable()
-      .max(new Date(), "Purchase date should be today or before!")
-      ,
     bookingDate: Yup.date()
     .transform((curr, orig) => orig === '' ? null : curr)
     .required('Date is required')
@@ -54,7 +48,6 @@ function EditBooking({booking}){
           sc_id:booking.sc_id,
           productName:booking.productName,
           productModelNo:booking.productModelNo,
-          purchaseDate:booking.purchaseDate,
           bookingDate:booking.bookingDate,
           contactNumber:booking.contactNumber,
           bookingTime:booking.bookingTime,
@@ -75,7 +68,6 @@ function EditBooking({booking}){
             
               <TextBar label="Product Name"   name="productName" type="text" id="editName" />
               <TextBar label="ModelNumber"   name="productModelNo" type="text" id="editNumber" />
-              <TextBar label="DateOfPurchase" name="purchaseDate" type="date" id="editPurchaseDate" />
               <TextBar label="DateOfBooking" name="bookingDate" type="date" id="editBookingDate" />
               <TextBar label="Contact"  name="contactNumber" type="text" id="editContact" />
               <TextBar  label="Slot Time"  name="bookingTime" type="time" id="editBookingTime" />
