@@ -3,14 +3,11 @@ package com.example.fyproject.service;
 import com.example.fyproject.config.SecurityUtils;
 import com.example.fyproject.dao.ServiceCenterDao;
 import com.example.fyproject.dao.UserDao;
-import com.example.fyproject.entity.Appointment;
-import com.example.fyproject.entity.Rating;
 import com.example.fyproject.entity.ServiceCenter;
 import com.example.fyproject.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -66,6 +63,13 @@ public class ServiceCenterServicesimpl implements com.example.fyproject.service.
 	public List<ServiceCenter> viewCenterByType(long sctype) {
 
 		return centerDao.findBySctype(sctype);
+	}
+
+	@Override
+	public Optional<ServiceCenter> viewCenterById(long id) {
+		Optional<ServiceCenter> temp = centerDao.findById(id);
+		System.out.println(temp);
+		return  temp;
 	}
 
 	@Override

@@ -184,6 +184,7 @@ public class AppointmentServiceimpl implements com.example.fyproject.service.App
         appointment.setPaymentDone("yes");
         appointment.setBookingStatus("accept");
         appointment.setServiceStatus("ended");
+        appointment.setFinalPay("no");
         this.appointmentDao.save(appointment);
         return appointment;
     }

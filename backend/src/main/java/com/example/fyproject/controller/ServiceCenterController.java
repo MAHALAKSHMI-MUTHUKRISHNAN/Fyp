@@ -55,6 +55,11 @@ public class ServiceCenterController {
 		return this.centerService.viewCenterByType(Long.parseLong(id));
 	}
 
+	@GetMapping("/viewCenterById/{id}")
+	public Optional<ServiceCenter> viewCenterById(@PathVariable String id){
+		return this.centerService.viewCenterById(Long.parseLong(id));
+	}
+
 	@DeleteMapping("/deleteCenter/{id}")
 	public ServiceCenter deleteCenter(@PathVariable String id) {
 		ServiceCenter deleted = this.centerService.deleteCenter(Long.parseLong(id));

@@ -8,12 +8,13 @@ import Rating from "./Rating";
 import EditRating from "./EditRating";
 import EditBooking from "./EditBooking";
 import '../styles/MyBookings.css';
-
+import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 function ViewUserBookings(){
+   
     const [data,setData] = useState([
         {
             book_id:'1',
@@ -22,11 +23,33 @@ function ViewUserBookings(){
             bookingTime:"4pm to 6pm",
         },
     ]);
+    const [center,setCenter] = useState([
+        {
+email:'maha@gmail.com',
+
+        },
+    ]);
     const getUserBookings=()=>{
         axiosObject.get(`/getAppointments/user`).then(
             (response)=>{
               console.log("booking fetched");
               setData(response.data);
+              
+            },(error)=>{
+              console.log(error);
+            }
+          );
+    };
+
+    const getCenterDetails=(centerid)=>{
+        axiosObject.get(`/viewCenterById/${centerid}`).then(
+            (response)=>{
+                console.log("start fetched");
+              setCenter(response.data);
+              console.log(response.data);
+              console.log(center.email);
+              console.log("center fetched");
+              localStorage.setItem('centerEmail',center.email);
             },(error)=>{
               console.log(error);
             }
@@ -72,19 +95,36 @@ function ViewUserBookings(){
         },
     ]);
     const handlepay=()=>{
-        window.location.replace("/user/payment");
+        let centerid = localStorage.getItem('centerId');
+        getCenterDetails(centerid);
+        setTimeout(() => { window.location.replace('/user/payment'); }, 4000);   
+      //window.location.replace("/user/payment");
     }
     const handleservice=()=>{
         let id = localStorage.getItem('appId');
+        let centerid = localStorage.getItem('centerId');
+        getCenterDetails(centerid);
+        var templateParams = {
+            email : center.email,
+            decision : 'Service Ended'
+        };
+        emailjs.send('service_zw5vono', 'template_o3wqthx', templateParams,'oM-ruoNGEgD2fdPNh')
+        .then(function(response) {
+           alert('SUCCESS!', response.status, response.text);
+           
+        }, function(error) {
+           alert('FAILED...', error);
+        });
         axiosObject.put(`/serviceend/${id}`).then(
-          (response)=>{
-            localStorage.removeItem("appId");
-            toast.success('Thanks for making service with us',{autoClose: 2000});
-            setTimeout(() => { window.location.replace('/user/mybooking'); }, 2000);
-          },(error)=>{
-            console.log(error);
-          }
-        )
+            (response)=>{
+              localStorage.removeItem("appId");
+              toast.success('Thanks for making service with us',{autoClose: 2000});
+              setTimeout(() => { window.location.replace('/user/mybooking'); }, 4000);
+            },(error)=>{
+              console.log(error);
+            }
+          )
+        
       }
     const[show,setShow]=useState(false);
     const[show1,setShow1]=useState(false);
@@ -122,7 +162,6 @@ function ViewUserBookings(){
         
          <TableHead style={{fontWeight:"bolder"}}>
              <TableCell>Booking No.</TableCell>
-         <TableCell>Product Name</TableCell>
          <TableCell>Date</TableCell>
          <TableCell>Time</TableCell>
          </TableHead>
@@ -133,7 +172,7 @@ function ViewUserBookings(){
                                 
                                    <TableRow key="key">
                                        <TableCell>{val.book_id}</TableCell>
-                                <TableCell>{val.productName}</TableCell>
+                                
                                 <TableCell>{val.bookingDate}</TableCell>
                                 <TableCell>{val.bookingTime}</TableCell>
                                {val.bookingStatus ==="no" ?
@@ -148,7 +187,7 @@ function ViewUserBookings(){
                             ?
                                <TableCell>
                                 
-                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id);  handlepay();} }>Make Initial Payment to confirm your service </button>
+                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id);localStorage.setItem("custEmail",val.custEmail);localStorage.setItem("centerId",val.sc_id);  handlepay();} }>Make Initial Payment to confirm your service </button>
                                
                                </TableCell>
                                 
@@ -177,7 +216,7 @@ function ViewUserBookings(){
                                  :val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "started"
                                  ? 
                                  <TableCell>
-                                     <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"black"}} id="servicebutton" onClick={() => {localStorage.setItem("appId",val.book_id);  handleservice();} }>Click when your service is completed</button>
+                                     <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"black"}} id="servicebutton" onClick={() => {localStorage.setItem("appId",val.book_id);localStorage.setItem("centerId",val.sc_id);  handleservice();} }>Click when your service is completed</button>
                                
                                        </TableCell> 
                                         : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended" && val.charges === "null"
@@ -188,7 +227,7 @@ function ViewUserBookings(){
                                               : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended" && val.charges !== "null" && val.finalPay === "no"
                                               ? 
                                               <TableCell>
-                                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id); localStorage.setItem("finalPay",val.charges);localStorage.setItem("isFinalPay","true"); handlepay();} }>Final Payment </button>
+                                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id); localStorage.setItem("custEmail",val.custEmail);localStorage.setItem("centerId",val.sc_id);localStorage.setItem("finalPay",val.charges);localStorage.setItem("isFinalPay","true"); handlepay();} }>Final Payment </button>
                                
                                                     </TableCell>
                                  : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended"  && val.charges !=null && val.finalPay === "yes" && val.rating ==null

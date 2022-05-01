@@ -8,7 +8,7 @@ import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import emailjs from "@emailjs/browser";
 
 const CreditCardForm = () => {
   const [values, setValues] = useState({
@@ -17,8 +17,11 @@ const CreditCardForm = () => {
     cardExpiration: '',
     cardSecurityCode:''
 })
+
 const finalPay = localStorage.getItem('finalPay');
 const isFinalPay = localStorage.getItem('isFinalPay');
+const custEmail = localStorage.getItem('custEmail');
+const centerEmail = localStorage.getItem('centerEmail');
 const handleChange = e => {
     const { name, value } = e.target
     setValues({
@@ -37,6 +40,7 @@ const handleFocus = (e) => {
 
 const editPayment=()=>{
   let id = localStorage.getItem('appId');
+  
   axiosObject.put(`/payment/${id}`).then(
     (response)=>{
       localStorage.removeItem("appId");
@@ -46,6 +50,22 @@ const editPayment=()=>{
       console.log(error);
     }
   )
+  
+      
+  var templateParams = {
+
+    centermail : centerEmail,
+    email : custEmail,
+    decision : 'Initial Payment is done '
+};
+emailjs.send('service_zw5vono', 'template_o3wqthx', templateParams,'oM-ruoNGEgD2fdPNh')
+.then(function(response) {
+   alert('SUCCESS!', response.status, response.text);
+   localStorage.removeItem("custEmail");
+   localStorage.removeItem("centerEmail");
+}, function(error) {
+   alert('FAILED...', error);
+});
 }
 
 const editFinalPay=()=>{
@@ -61,6 +81,16 @@ const editFinalPay=()=>{
       console.log(error);
     }
   )
+  var templateParams = {
+    email : custEmail,
+    decision : 'Final Payment done'
+};
+emailjs.send('service_zw5vono', 'template_o3wqthx', templateParams,'oM-ruoNGEgD2fdPNh')
+.then(function(response) {
+   alert('SUCCESS!', response.status, response.text);
+}, function(error) {
+   alert('FAILED...', error);
+});
 }
 
 const handleSubmit =e => {

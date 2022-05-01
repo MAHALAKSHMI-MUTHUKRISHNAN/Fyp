@@ -18,14 +18,15 @@ public class Appointment {
     @Transient
     private long u_id;
 
-    @Transient
+
     private long sc_id;
 
 
-    private String productName;
-    private String productModelNo;
-    private String problemStatement;
+    private String custName;
+    private String custEmail;
     private String contactNumber;
+    private String custAddress;
+    private String problemStatement;
     private String bookingDate;
     private String bookingTime;
     private String bookingStatus;

@@ -3,6 +3,8 @@ import { Formik, Form} from 'formik';
 import TextBar from './TextBar';
 import * as Yup from 'yup';
 import axiosObject from '../../api/bootapi';
+import emailjs from "@emailjs/browser";
+import { ToastContainer, toast } from 'react-toastify';
 
 function EditCharges({booking}){
 
@@ -14,10 +16,25 @@ function EditCharges({booking}){
       
     })
     const sendData=(data)=>{
+     
+      let custemail = localStorage.getItem('email');
+      var templateParams = {
+       email : custemail,
+       decision : 'Charges updated'
+   };
+   emailjs.send('service_zw5vono', 'template_o3wqthx', templateParams,'oM-ruoNGEgD2fdPNh')
+   .then(function(response) {
+      alert('SUCCESS!', response.status, response.text);
+  
+   }, function(error) {
+      alert('FAILED...', error);
+   });
       axiosObject.put(`/editCharges`,data).then(
         (response)=>{
           console.log(response);
-          window.location.replace('/retail/booking');
+          toast.success('Your service started',{autoClose: 500});
+          setTimeout(() => { window.location.replace('/retail/booking'); }, 2000);
+          
         },(error)=>{
           console.log(error);
         }
@@ -25,14 +42,16 @@ function EditCharges({booking}){
     }
     
     return (
+      <>
+      <ToastContainer/>
       <Formik
         initialValues={{
           book_id:booking.book_id,
           u_id:booking.u_id,
           sc_id:booking.sc_id,
-          productName:booking.productName,
-          productModelNo:booking.productModelNo,
-          purchaseDate:booking.purchaseDate,
+          custName: booking.custName,
+          custEmail: booking.custEmail,
+          custAddress:  booking.custAddress,
           bookingDate:booking.bookingDate,
           contactNumber:booking.contactNumber,
           bookingTime:booking.bookingTime,
@@ -64,6 +83,7 @@ function EditCharges({booking}){
           </div>
         )}
       </Formik>
+      </>
     )
   } 
 export default EditCharges;

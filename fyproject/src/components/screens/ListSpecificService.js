@@ -94,7 +94,22 @@ const ListSpecificService = () => {
                 <Card.Body>
                   <Card.Title>{center.name}</Card.Title>
                   <Card.Text>
-                  {center.details}
+                  <div class="m-4">
+    <div class="accordion" id="myAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">Details</button>									
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+                <div class="card-body">
+                  <p>{center.details}</p>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
                   </Card.Text>
                  </Card.Body>
                   {

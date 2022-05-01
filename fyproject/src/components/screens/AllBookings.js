@@ -40,7 +40,8 @@ function AllBookings(){
          <Table style={{width:'50%', margin:'auto' }}>
          <TableHead style={{fontWeight:"bolder"}}>
          <TableCell>Booking No.</TableCell>
-         <TableCell>Product Name</TableCell>
+         <TableCell>Customer Name</TableCell>
+         <TableCell>Contact Details</TableCell>
          <TableCell>Date</TableCell>
          <TableCell>Time</TableCell>
          <TableCell>Booking Status</TableCell>
@@ -52,7 +53,8 @@ function AllBookings(){
                                return(
                                    <TableRow key="key">
                                        <TableCell>{val.book_id}</TableCell>
-                                <TableCell>{val.productName}</TableCell>
+                                <TableCell>{val.custName}</TableCell>
+                                <TableCell>{val.custAddress}<br></br>{val.custEmail}<br></br>{val.contactNumber}</TableCell>
                                 <TableCell>{val.bookingDate}</TableCell>
                                 <TableCell>{val.bookingTime}</TableCell>
                                 <TableCell>{val.bookingStatus}</TableCell>

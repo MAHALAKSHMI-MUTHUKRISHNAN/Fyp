@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { Formik, Form} from 'formik';
 import TextBar from './TextBar';
 import * as Yup from 'yup';
@@ -8,11 +8,13 @@ function EditBooking({booking}){
 
     const validate = Yup.object({
         
-      productName: Yup.string()
+      custName: Yup.string()
       
-      .required('Name of the product is Required'),
-    productModelNo: Yup.string()
-      .required('Model number is Required'),
+      .required('Name is Required'),
+    custEmail: Yup.string()
+      .required('Email is Required'),
+      custAddress: Yup.string()
+      .required('Address is Required'),
     contactNumber:Yup.string()
       .min(10,'should be 10 number')
       .max(10,'should be 10 number')
@@ -29,6 +31,25 @@ function EditBooking({booking}){
       .required('Please mention time from 10.00AM to 7.00 PM')
       
     })
+
+    const getUser=()=>{
+      axiosObject.get(`/mydetails`).then(
+          (response)=>{
+            console.log("user fetched");
+            setUser(response.data);
+          },(error)=>{
+            console.log(error);
+          }
+        );
+    };
+  
+    const [user,setUser] = useState([{"id":1,"mobile":"4534332323"}]);
+   
+    useEffect(()=>{
+      document.title= "watchService || SlotBooking"
+      getUser();
+      },[]);
+
     const sendData=(data)=>{
       axiosObject.put(`/editAppointment`,data).then(
         (response)=>{
@@ -43,15 +64,18 @@ function EditBooking({booking}){
     return (
       <Formik
         initialValues={{
-          book_id:booking.book_id,
-          u_id:booking.u_id,
-          sc_id:booking.sc_id,
-          productName:booking.productName,
-          productModelNo:booking.productModelNo,
-          bookingDate:booking.bookingDate,
-          contactNumber:booking.contactNumber,
-          bookingTime:booking.bookingTime,
-          problemStatement:booking.problemStatement,
+        book_id:booking.book_id,
+        u_id:user.id,
+        sc_id:booking.sc_id,
+        custName: booking.custName,
+        custEmail: booking.custEmail,
+        custAddress:  booking.custAddress,
+        contactNumber: booking.contactNumber,
+        bookingDate: booking.bookingDate,
+        bookingTime: booking.bookingTime,
+        problemStatement:  booking.problemStatement,
+
+         
         }}
         validationSchema={validate}
         onSubmit={values => {
@@ -66,8 +90,9 @@ function EditBooking({booking}){
             <h1 className='mt-4'style={{fontWeight:"bold"}} >Enter the Product Details </h1>
             <Form>
             
-              <TextBar label="Product Name"   name="productName" type="text" id="editName" />
-              <TextBar label="ModelNumber"   name="productModelNo" type="text" id="editNumber" />
+              <TextBar label="Customer Name"   name="custName" type="text" id="editName" />
+              <TextBar label="Customer Email"   name="custEmail" type="text" id="editNumber" />
+              <TextBar label="Customer Address" name="custAddress" type="text" id="editCustomerAddress" />
               <TextBar label="DateOfBooking" name="bookingDate" type="date" id="editBookingDate" />
               <TextBar label="Contact"  name="contactNumber" type="text" id="editContact" />
               <TextBar  label="Slot Time"  name="bookingTime" type="time" id="editBookingTime" />

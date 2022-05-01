@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ServiceCenterDao extends JpaRepository<ServiceCenter,Long>{
     List<ServiceCenter> findBySctype(long sctype);
+
 }
