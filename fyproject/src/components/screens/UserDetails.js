@@ -47,7 +47,7 @@ function UserDetails() {
         );
     };
     useEffect(()=>{
-        document.title="watchService || User Management"
+        document.title="Fixmate || User Management"
         getAllUser();
     },[]);
     const [data,setData]=useState([
@@ -93,7 +93,7 @@ function UserDetails() {
                           <td colSpan={2}>{val.mobile}</td>
 
                           <td><button id="removeUserButton" onClick={() => remove(val.id)} className='action'>remove</button></td>
-                          <td><button id="editUserButton" className='action' onClick={()=>{openModal();setModalData(val)}}>edit</button>
+                          {/* <td><button id="editUserButton" className='action' onClick={()=>{openModal();setModalData(val)}}>edit</button>
                           <Modal
                         isOpen={modalIsOpen}
                         onAfterOpen={afterOpenModal}
@@ -104,7 +104,7 @@ function UserDetails() {
                         <EditUser user={modalData}/>
                     </Modal>
 
-                          </td>
+                          </td> */}
                       </tr>
 
                       </>

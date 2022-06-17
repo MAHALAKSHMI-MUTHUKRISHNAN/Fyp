@@ -7,7 +7,7 @@ function EditCenter(){
     let center =JSON.parse( localStorage.getItem('SelectedCenter'));
     const isAdmin = localStorage.getItem("isAdmin");
     useEffect(() => {
-        document.title = "WatchService || EditCenter";
+        document.title = "Fixmate || EditCenter";
       },[]);
     return(
         <>

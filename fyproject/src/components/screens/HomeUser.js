@@ -16,7 +16,7 @@ const HomeUser = () => {
 
    
     useEffect(()=>{
-    document.title= "watchService || Home"
+    document.title= "Fixmate || Home"
    
     },[]);
   

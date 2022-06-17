@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {ErrorMessage, Formik, Form} from 'formik';
 import TextBar from './TextBar';
 import * as Yup from 'yup';
@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 import axiosObject from '../../api/bootapi';
+import VerifyMobile from "./VerifyMobile";
+import { Modal,Button,OverlayTrigger,Tooltip } from "react-bootstrap";
+
 function RegisterForm(){
   const validate = Yup.object({
     
@@ -55,6 +58,16 @@ function RegisterForm(){
       }
     )
   }
+  const [modalData,setModalData] = useState([
+    {
+       
+    },
+]);
+
+  const[show,setShow]=useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
   return (
     <>
     <ToastContainer/>
@@ -63,16 +76,26 @@ function RegisterForm(){
         
         name: '',
         username: '',
-        role : '',
+        role : 'user',
         mobile:'',
         email: '',
         password: '',
       }}
       validationSchema={validate}
       onSubmit={values => {
-      
+        setModalData(values);
+        handleShow();
+        
+      let verified = localStorage.getItem("userverified");
+      let notverified = localStorage.getItem("usernotverified");
         console.log(values);
-        sendData(values);
+        if(verified){
+          sendData(values);
+        }
+        if(notverified){
+          alert("Enter correct details");
+        }
+        
       }}
     >
       {formik => (
@@ -82,8 +105,8 @@ function RegisterForm(){
           
             <TextBar id="name" label="Name" name="name" type="text" />
             <TextBar id="username" label="Username" name="username" type="text" />
-           <TextBar id="role" label="Role" name="role" type="text" /> 
-            {/* <div className="mb-2">
+           {/*  <TextBar id="role" label="Role" name="role" type="text" /> 
+           <div className="mb-2">
       <label htmlFor="role" style={{color:"black",display:"flex",justifyContent:'flex-start',fontSize:17}}>Role</label>
       <select name="role" id="role" className={`form-control shadow-none`}>
   <option value="user" >User</option>
@@ -94,12 +117,13 @@ function RegisterForm(){
     </div> */}
   
             <TextBar id="mobilenumber" label="Mobile" name="mobile" type="text" />
-            <TextBar id="email" label="Email" name="email" type="email" />
+          
+             <TextBar id="email" label="Email" name="email" type="email" />
             <TextBar id="password" label="password" name="password" type="password" />
             <span className="">
                   Already Have Account?
                   <nav>
-                    <Link id="loginlink" to="/Login"><h4 style={{color:'black'}}>login</h4></Link>
+                    <Link id="loginlink" to="/user/login"><h4 style={{color:'black'}}>login</h4></Link>
                   </nav>
                 </span>
             <button id="registerbutton" className="btn btn-dark mt-3" type="submit">Register</button>
@@ -110,6 +134,14 @@ function RegisterForm(){
         </div>
       )}
     </Formik>
+    <Modal show={show} onHide={handleClose} >
+                        <Modal.Header closeButton>
+                            <Modal.Body>
+                                <VerifyMobile booking={modalData}/>
+                            </Modal.Body>
+                        </Modal.Header>
+
+                    </Modal>
     </>
   )
 } 

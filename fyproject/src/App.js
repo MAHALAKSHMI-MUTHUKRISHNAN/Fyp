@@ -3,13 +3,14 @@ import './App.css';
 
 import Register from './components/screens/Register'
 import Login from './components/screens/Login'
+import LoginAdmin from './components/screens/LoginAdmin'
 import Mainpage from './components/screens/Mainpage'
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import RetailerRoute from "./RetailerRoute";
 import Error from './components/screens/Error'
 import {
-  BrowserRouter as Router,Switch,Route} from "react-router-dom";
+  BrowserRouter as Router,Switch,Route, Redirect} from "react-router-dom";
 import HomeUser from './components/screens/HomeUser';
 import HomeRetail from './components/screens/HomeRetail';
 import AddCenter from "./components/screens/AddCenter"
@@ -27,15 +28,26 @@ import Appoinments from './components/screens/Appointments';
 import ViewSCBooking from './components/screens/ViewSCBooking';
 import Payment from './components/screens/Payment';
 import CreditCardForm from './components/screens/CreditCardForm';
+import Welcome from './components/screens/Welcome';
+import MainpageRetailer from './components/screens/MainpageRetailer';
+
+
 function App() {
+
+  
   return (
     <div>
       <Router>
      <Switch>
-     <Route path="/" exact component={Mainpage}></Route>
-     <Route path="/Login" component={Login}></Route>
+     <Route path="/" exact component={Welcome}></Route>
+     <Route path="/user" exact component={Mainpage}></Route>
+     <Route path="/retailer" exact component={MainpageRetailer}></Route>
+     <Route path="/user/login" component={Login}></Route>
+     <Route path="/admin/login" component={LoginAdmin}></Route>
+     <Route path="/retailer/login" component={Login}></Route>
+     <Route path="/retailer/register" exact component={Register}></Route>
      <UserRoute path="/user/payment" component={CreditCardForm}></UserRoute>
-        <Route path="/Register" exact component={Register}></Route>
+        <Route path="/user/register" exact component={Register}></Route>
         <AdminRoute path="/admin/home" exact component={HomeAdmin}></AdminRoute>
         <UserRoute path="/user/home" exact component={HomeUser}></UserRoute>
         <UserRoute path="/user/service" exact component={ListSpecificService}></UserRoute>
@@ -56,7 +68,9 @@ function App() {
         <Route path="/**" exact component={Error}></Route>
      </Switch>
      </Router>
+     
     </div>
+   
   );
 }
 

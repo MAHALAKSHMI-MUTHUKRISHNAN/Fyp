@@ -47,7 +47,7 @@ function LoginForm(){
       initialValues={{
         username: '',
         password: '',
-        role:'',
+        role:'user',
       }}
       validationSchema={validate}
       onSubmit={values => {
@@ -62,8 +62,8 @@ function LoginForm(){
           
             <TextBar id="username" label="username" name="username" type="text" />
             <TextBar id="password" label="password" name="password" type="password" />
-            <TextBar id="role" label="role" name="role" type="text" />
-            {/* <div className="mb-2">
+          {/*  <TextBar id="role" label="role" name="role" type="text" />
+             <div className="mb-2">
       <label htmlFor="role" style={{color:"black",display:"flex",justifyContent:'flex-start',fontSize:17}}>Role</label>
       <select name="role" id="role" className={`form-control shadow-none`}>
   <option value="user" >User</option>
@@ -76,7 +76,7 @@ function LoginForm(){
             <span className="">
                   New User
                   <nav>
-                    <Link id="registerlink" to="/Register"><h4 style={{color:'black'}}>Signup</h4></Link>
+                    <Link id="registerlink" to="/user/register"><h4 style={{color:'black'}} >Signup</h4></Link>
                   </nav>
                 </span>
             <button id="loginbutton" className="btn btn-dark mt-3" type="submit">Login</button>

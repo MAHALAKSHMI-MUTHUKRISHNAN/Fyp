@@ -16,11 +16,11 @@ function EditCharges({booking}){
       
     })
     const sendData=(data)=>{
-     
+     let charges = localStorage.getItem('charges');
       let custemail = localStorage.getItem('email');
       var templateParams = {
        email : custemail,
-       decision : 'Charges updated'
+       decision : 'Your charge for the service is Rs.'+ charges
    };
    emailjs.send('service_zw5vono', 'template_o3wqthx', templateParams,'oM-ruoNGEgD2fdPNh')
    .then(function(response) {
@@ -33,6 +33,7 @@ function EditCharges({booking}){
         (response)=>{
           console.log(response);
           toast.success('Your service started',{autoClose: 500});
+          localStorage.removeItem('charges')
           setTimeout(() => { window.location.replace('/retail/booking'); }, 2000);
           
         },(error)=>{
@@ -52,6 +53,8 @@ function EditCharges({booking}){
           custName: booking.custName,
           custEmail: booking.custEmail,
           custAddress:  booking.custAddress,
+          lattitude:booking.lattitude,
+          longitude:booking.longitude,
           bookingDate:booking.bookingDate,
           contactNumber:booking.contactNumber,
           bookingTime:booking.bookingTime,
@@ -60,7 +63,7 @@ function EditCharges({booking}){
         }}
         validationSchema={validate}
         onSubmit={values => {
-        
+         localStorage.setItem("charges",values.charges);
           console.log(values);
           sendData(values);
           

@@ -25,7 +25,7 @@ const ViewSCReview = () => {
           );
     };
     useEffect(()=>{
-    document.title= "watchService || Ratings"
+    document.title= "Fixmate || Ratings"
     getAllRatings();
     },[]);
 

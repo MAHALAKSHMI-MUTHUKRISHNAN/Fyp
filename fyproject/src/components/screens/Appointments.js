@@ -5,7 +5,11 @@ import * as Yup from 'yup';
 import axiosObject from '../../api/bootapi';
 import '../styles/Appointments.css';
 import NavbarUser from './NavbarUser';
+import { Modal,Button,OverlayTrigger,Tooltip } from "react-bootstrap";
+import VerifyMobileForBook from './VerifyMobileForBook';
 import CenterImages from '../assets/centerImages/CenterImages';
+import emailjs from "@emailjs/browser";
+
 function Appoinments(){
   let center=JSON.parse(localStorage.getItem('SelectedCenter'));
  
@@ -23,7 +27,7 @@ function Appoinments(){
   const [user,setUser] = useState([{"id":1,"mobile":"4534332323"}]);
   
   useEffect(()=>{
-    document.title= "watchService || SlotBooking"
+    document.title= "Fixmate || SlotBooking"
     getUser();
     },[]);
   const validate = Yup.object({
@@ -47,19 +51,40 @@ function Appoinments(){
       .required('Please mention time from 10.00AM to 7.00 PM')
       
   })
-  const postDatatoServer=(data)=>{
-    axiosObject.post(`/appointment`,data).then(
-      (response)=>{
-        console.log(response);
-        localStorage.removeItem('SelectedCenter');
-        window.location.replace("/user/mybooking");
-      
-      },(error)=>{
-        console.log(error);
-        console.log("error");
-      }
-    )
+
+  const getCoordinates = (position) =>{
+    console.log(position.coords.latitude);
+   localStorage.setItem("longs",position.coords.longitude);
+   localStorage.setItem("lats",position.coords.latitude);
+    console.log(lat);
+    console.log(long);
+   window.location.reload();
+    
+  
   }
+ 
+  const geoLocation = ()=>{
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(getCoordinates);
+    }
+    else{
+      alert("Not supported");
+    }
+   
+  }
+  const lat = localStorage.getItem('lats');
+  const long = localStorage.getItem('longs');
+ 
+
+  const [modalData,setModalData] = useState([
+    {
+       
+    },
+]);
+
+  const[show,setShow]=useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
   return (
     <div className='App-temp'>
     <NavbarUser/>
@@ -68,6 +93,8 @@ function Appoinments(){
       initialValues={{
         u_id:user.id,
         sc_id:center.id,
+        lattitude : lat,
+        longitude : long,
         custName: user.name,
         custEmail: user.email,
         custAddress: '',
@@ -78,9 +105,11 @@ function Appoinments(){
       }}
       validationSchema={validate}
       onSubmit={values => {
-      
+        setModalData(values);
+        localStorage.setItem('centerEmail',center.email);
+        handleShow();
         console.log(values);
-        postDatatoServer(values);
+       
       }}
     >
       {formik => (
@@ -90,7 +119,7 @@ function Appoinments(){
               <img src={center.imageurl} alt="" className="img" />
               <div className='address'>
                   <label>Name : {center.name}</label><br />
-                  <label>Address :{center.address}</label><br />
+                  {/* <label>Address :{center.address}</label><br /> */}
                   <label>Services :{center.details}</label><br />
                   
               </div>
@@ -99,12 +128,15 @@ function Appoinments(){
               <Form>
                 <div className='inp'>
                   <h1 className='mt-4'style={{fontWeight:"bold", paddingBottom: "2vh"}} >Product Details</h1>
+                  <button id="location" className="btn btn-dark mt-3" type="button" onClick={geoLocation}>Get Location</button>
                   <TextBar id="problemStatement" label="Problem" placeholder="What are the service needed?" name="problemStatement" type="text" style={{height:"80px"}}/>
                   <TextBar id="bookingdate" label="Date of booking" name="bookingDate" type="date" />
                   <TextBar id="bookingtime" label="Time of booking" placeholder="choose time in 24hr format" name="bookingTime" type="time" />
                   <TextBar id="custName" label="Customer Name" placeholder="Enter your name" name="custName" type="text" />
                   <TextBar id="custEmail" label="Customer Email" placeholder="Enter your email" name="custEmail" type="text" />
-                  <TextBar id="custAddress" label="Customer Address" placeholder="Place where service to be done" name="custAddress" type="text" style={{height:"50px"}} />
+                  <TextBar label="lat"  placeholder="Enter the address" name="lattitude"  type="text" id="addCenterAddress" />
+            <TextBar label="long"  placeholder="Enter the address" name="longitude" type="text"  id="addCenterAddress" />
+            <TextBar id="custAddress" label="Customer Address" placeholder="Place where service to be done" name="custAddress" type="text" style={{height:"50px"}} />
                   <TextBar id="contactnumber" label="Mobile" name="contactNumber" type="text" />
                   <button id="resetbutton" className="btn btn-dark mt-3 ml-3"style={{marginLeft:15}} type="reset">Reset</button>
                   <button id="bookappointmentbutton" className="btn btn-success mt-3"style={{marginLeft:40}} type="submit">BOOK</button>
@@ -115,6 +147,14 @@ function Appoinments(){
         </div>
       )}
     </Formik>
+    <Modal show={show} onHide={handleClose} >
+                        <Modal.Header closeButton>
+                            <Modal.Body>
+                                <VerifyMobileForBook booking={modalData}/>
+                            </Modal.Body>
+                        </Modal.Header>
+
+                    </Modal>
     </div>
   )
 } 

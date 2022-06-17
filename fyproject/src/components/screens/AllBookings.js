@@ -18,7 +18,7 @@ function AllBookings(){
           );
     };
     useEffect(()=>{
-    document.title= "watchService || AllBooking"
+    document.title= "Fixmate || AllBooking"
     getAllBookings();
     },[]);
     const [data,setData] = useState([
@@ -46,6 +46,7 @@ function AllBookings(){
          <TableCell>Time</TableCell>
          <TableCell>Booking Status</TableCell>
          <TableCell>Initial Payment Status</TableCell>
+         <TableCell>Final Payment Status</TableCell>
          </TableHead>
                     <TableBody>
                        {
@@ -59,6 +60,7 @@ function AllBookings(){
                                 <TableCell>{val.bookingTime}</TableCell>
                                 <TableCell>{val.bookingStatus}</TableCell>
                                 <TableCell>{val.paymentDone}</TableCell>
+                                <TableCell>{val.finalPay}</TableCell>
                                 </TableRow>
                                 )})
                        }

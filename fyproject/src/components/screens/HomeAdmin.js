@@ -15,7 +15,7 @@ import CenterImages from "../assets/centerImages/CenterImages";
 const HomeAdmin = () => {
    
     useEffect(()=>{
-    document.title= "watchService || Home"
+    document.title= "Fixmate || Home"
     },[]);
     
 

@@ -7,7 +7,7 @@ import NavBar from './Navbar';
 import NavBarRetail from './NavbarRetail';
 function AddCenter(){
     useEffect(() => {
-        document.title = "WatchService || AddCenter";
+        document.title = "Fixmate || AddCenter";
       },[]);
      
       const isAdmin = localStorage.getItem("isAdmin");

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/Navbar.css";
+import SpeechRecognition from 'react-speech-recognition/lib/SpeechRecognition';
+import { useSpeechRecognition } from 'react-speech-recognition';
+import Dictaphone from "./Dictaphone";
+
 
 function NavBar() {
   const [click, setClick] = useState(false);
@@ -9,15 +13,23 @@ function NavBar() {
   const handleLogout = () => {
     localStorage.clear();
   }
+  
   return (
     <>
+     
+       
+       
       <nav className="navbar">
+       
         <div className="nav-container">
+        
           <NavLink exact to="/" id="landinglink" className="nav-logo">
             Fix Mate
+            
           </NavLink>
 
           <ul className={click ? "nav-menu active" : "nav-menu"}>
+          
             <li className="nav-item">
               <NavLink
                 exact
@@ -30,7 +42,7 @@ function NavBar() {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink
                 exact
                 to="/admin/AddServiceCenter"
@@ -41,7 +53,7 @@ function NavBar() {
               >
                 Add center
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item">
               <NavLink
                 exact
@@ -90,6 +102,7 @@ function NavBar() {
                 Logout
               </NavLink>
             </li>
+
           </ul>
           <div className="nav-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>

@@ -138,7 +138,7 @@ function ViewSCBooking(){
        
          <h1 style={{textAlign:'center',paddingTop:'10%'}}>Bookings </h1>
          
-         <Table style={{width:'50%', margin:'auto'}}>
+         <Table style={{width:'80%', margin:'auto'}}>
         
          <TableHead style={{fontWeight:"bolder"}}>
              <TableCell>Booking No.</TableCell>
@@ -156,7 +156,8 @@ function ViewSCBooking(){
                                    <TableRow key="key">
                                        <TableCell>{val.book_id}</TableCell>
                                        <TableCell>{val.custName}</TableCell>
-                                       <TableCell>{val.custAddress}<br></br>{val.custEmail}<br></br>{val.contactNumber}</TableCell>
+                                       <TableCell>{val.custAddress}<br></br>{val.custEmail}<br></br>{val.contactNumber}<br></br><iframe src={`http://maps.google.com/maps?q=${val.lattitude},${val.longitude}&output=embed`} height="70" width="200"></iframe>
+                  </TableCell>
                                 <TableCell>{val.bookingDate}</TableCell>
                                 <TableCell>{val.bookingTime}</TableCell>
                                 <TableCell>{val.paymentDone}</TableCell>
@@ -201,7 +202,7 @@ function ViewSCBooking(){
                                    </TableCell>:
                                    val.bookingDate <= today && val.bookingStatus === "accept"  && val.paymentDone === "yes" && val.serviceStatus === "ended" && val.charges != null && val.finalPay === "yes" ?
                                    <TableCell>
- <p>Payment successful</p>                              
+ <p>Final Payment successful</p>                              
                                    </TableCell>:
                                    <TableCell>
 <p></p>

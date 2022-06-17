@@ -34,7 +34,7 @@ const ListSpecificService = () => {
           );
     };
     useEffect(()=>{
-    document.title= "watchService || Type"
+    document.title= "Fixmate || Type"
     getAllServices();
     },[]);
     const [centers,setCenters]=useState([
@@ -58,9 +58,15 @@ const ListSpecificService = () => {
     setFilter(event.target.value);
   }
     let dataSearch = centers.filter(item =>{
-      return Object.keys(item).some(key =>
-        item[key].toString().toLowerCase().includes(filter.toString().toLowerCase())
-    )});
+      const result = Object.keys(item).some(key =>
+        item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
+      if (result) {
+        return result;
+      } else {
+        <p>No results</p>
+      }
+      } );
+    let count = 0;
     const isAdmin = localStorage.getItem("isAdmin");
     const isUser = localStorage.getItem("isUser");
   return (
@@ -85,7 +91,9 @@ const ListSpecificService = () => {
         </Container>
         <Row>
         {dataSearch.map((center) => {<dataSearch key ={center.id}/>
+        
           return (
+            
             
             <Col style={{ padding: '2rem' }} >
                 
@@ -132,7 +140,7 @@ const ListSpecificService = () => {
   <>
   <ListGroup className="list-group-flush">
                   
-                  <ListGroupItem>ADDRESS : {center.address}</ListGroupItem>
+                  {/* <ListGroupItem>ADDRESS : {center.address}</ListGroupItem> */}
                 </ListGroup>
   <Card.Body style={{alignItems:"center"}}>
                 <Link id="booklink" to="/user/Appointment"><button className="btn btn-success " onClick={()=>{throwDetails(center)}}>Book</button></Link>

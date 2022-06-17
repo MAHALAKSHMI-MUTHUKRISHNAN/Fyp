@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 
 export default function Error() {
     useEffect(() => {
-        document.title = "WatchService  || 404 page not found";
+        document.title = "Fixmate || 404 page not found";
       },[]);
   return (
     <div className='error-body' style={{display:"flex",alignItems:"center",flexDirection:"column"}}>

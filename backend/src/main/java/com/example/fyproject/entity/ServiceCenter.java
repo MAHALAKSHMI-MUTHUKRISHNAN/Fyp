@@ -25,6 +25,8 @@ public class ServiceCenter {
 
 	private long sctype;
 	private String email;
+	private String lattitude;
+	private String longitude;
 	private String address;
 	private String mobile;
 	private String imageurl;
@@ -34,7 +36,101 @@ public class ServiceCenter {
 	@JoinColumn(name="center_id", referencedColumnName = "id")
 	List<com.example.fyproject.entity.Appointment> appointments = new ArrayList<>();
 
+	public long getId() {
+		return id;
+	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getU_id() {
+		return u_id;
+	}
+
+	public void setU_id(long u_id) {
+		this.u_id = u_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public long getSctype() {
+		return sctype;
+	}
+
+	public void setSctype(long sctype) {
+		this.sctype = sctype;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getLattitude() {
+		return lattitude;
+	}
+
+	public void setLattitude(String lattitude) {
+		this.lattitude = lattitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getImageurl() {
+		return imageurl;
+	}
+
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
 
 
 //	@Override

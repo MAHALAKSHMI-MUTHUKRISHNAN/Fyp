@@ -46,7 +46,7 @@ function EditBooking({booking}){
     const [user,setUser] = useState([{"id":1,"mobile":"4534332323"}]);
    
     useEffect(()=>{
-      document.title= "watchService || SlotBooking"
+      document.title= "Fixmate || SlotBooking"
       getUser();
       },[]);
 

@@ -68,11 +68,27 @@ email:'maha@gmail.com',
 
 
     const remove=(value)=>{
+        let centerid = localStorage.getItem('centerId');
+        let bookID = localStorage.getItem('bookId');
+        getCenterDetails(centerid);
+        var templateParams = {
+            email : center.email,
+            decision : 'Booking has been deleted by user, booking id :'+ bookID
+        };
+        emailjs.send('service_zw5vono', 'template_o3wqthx', templateParams,'oM-ruoNGEgD2fdPNh')
+        .then(function(response) {
+          
+           
+        }, function(error) {
+          
+        }); 
         axiosObject.delete(`/deleteAppointment/${value}`).then(
             (response)=>{
                 console.log("User Deleted");
                 console.log(response);
-                refreshPage();
+                toast.success('Your Booking has been cancelled, Refund will be done within 2-3days',{autoClose: 2000});
+               
+                setTimeout(() => { window.location.replace('/user/mybooking'); }, 4000);
             },(error)=>{
                 console.log(error);
             }
@@ -103,17 +119,18 @@ email:'maha@gmail.com',
     const handleservice=()=>{
         let id = localStorage.getItem('appId');
         let centerid = localStorage.getItem('centerId');
+        let bookId = localStorage.getItem('bookId');
         getCenterDetails(centerid);
         var templateParams = {
             email : center.email,
-            decision : 'Service Ended'
+            decision : 'Service Ended by user, booking ID:'+ bookId
         };
         emailjs.send('service_zw5vono', 'template_o3wqthx', templateParams,'oM-ruoNGEgD2fdPNh')
         .then(function(response) {
-           alert('SUCCESS!', response.status, response.text);
+           
            
         }, function(error) {
-           alert('FAILED...', error);
+           
         });
         axiosObject.put(`/serviceend/${id}`).then(
             (response)=>{
@@ -138,6 +155,7 @@ email:'maha@gmail.com',
     const handleClose2 = () => setShow2(false);
 
     const today = new Date().toISOString().slice(0,10);
+    console.log(today);
     //const time = new Date().toTimeString().slice(0,5);
 
     // const[time,setTime]= useState("0:0");
@@ -158,12 +176,14 @@ email:'maha@gmail.com',
        
          <h1 style={{textAlign:'center',paddingTop:'10%'}}>Bookings</h1>
          
-         <Table style={{width:'50%', margin:'auto'}}>
+         <Table style={{width:'80%', margin:'auto'}}>
         
          <TableHead style={{fontWeight:"bolder"}}>
              <TableCell>Booking No.</TableCell>
          <TableCell>Date</TableCell>
          <TableCell>Time</TableCell>
+         <TableCell>Center Id</TableCell>
+         <TableCell>Problem</TableCell>
          </TableHead>
                     <TableBody>
                        {
@@ -175,6 +195,8 @@ email:'maha@gmail.com',
                                 
                                 <TableCell>{val.bookingDate}</TableCell>
                                 <TableCell>{val.bookingTime}</TableCell>
+                                <TableCell>{val.sc_id}</TableCell>
+                                <TableCell>{val.problemStatement}</TableCell>
                                {val.bookingStatus ==="no" ?
                                <TableCell>
 <p>Wait for confirmation from the service</p>
@@ -196,15 +218,15 @@ email:'maha@gmail.com',
                            ?
                            <TableCell>
                                    
-                           <OverlayTrigger
+                           {/* <OverlayTrigger
                                     overlay={
                                         <Tooltip id={'tooltip-top'}>
                                             Edit
                                         </Tooltip>
                                     }>
                                         <Button id="editappointmentbutton" onClick={()=>{handleShow();setModalData(val)}} data-toggle="modal"><i className="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>Edit</Button>
-                                        </OverlayTrigger>
-                                <button style = {{ marginLeft:20}} id="deleteappointmentbutton" onClick={() => remove(val.book_id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i>Delete</button>
+                                        </OverlayTrigger> */}
+                                <button style = {{ marginLeft:20}} id="deleteappointmentbutton" onClick={() =>{localStorage.setItem("centerId",val.sc_id);localStorage.setItem("bookId",val.book_id);localStorage.setItem("custName",val.custName); remove(val.book_id)}}><i className="fa fa-trash fa-lg" aria-hidden="true"></i>Delete</button>
                           
                             </TableCell>
 
@@ -216,7 +238,7 @@ email:'maha@gmail.com',
                                  :val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "started"
                                  ? 
                                  <TableCell>
-                                     <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"black"}} id="servicebutton" onClick={() => {localStorage.setItem("appId",val.book_id);localStorage.setItem("centerId",val.sc_id);  handleservice();} }>Click when your service is completed</button>
+                                     <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"black"}} id="servicebutton" onClick={() => {localStorage.setItem("appId",val.book_id);localStorage.setItem("centerId",val.sc_id); localStorage.setItem("bookId",val.book_id);localStorage.setItem("custName",val.custName); handleservice();} }>Click when your service is completed</button>
                                
                                        </TableCell> 
                                         : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended" && val.charges === "null"
@@ -227,7 +249,7 @@ email:'maha@gmail.com',
                                               : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended" && val.charges !== "null" && val.finalPay === "no"
                                               ? 
                                               <TableCell>
-                                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id); localStorage.setItem("custEmail",val.custEmail);localStorage.setItem("centerId",val.sc_id);localStorage.setItem("finalPay",val.charges);localStorage.setItem("isFinalPay","true"); handlepay();} }>Final Payment </button>
+                                                   <button style = {{backgroundColor:"#42C2FF",borderRadius:5,color:"white"}} id="paymentbutton" onClick={() => {localStorage.setItem("appId",val.book_id); localStorage.setItem("custEmail",val.custEmail);localStorage.setItem("centerId",val.sc_id);localStorage.setItem("bookId",val.book_id);localStorage.setItem("custName",val.custName);localStorage.setItem("finalPay",val.charges);localStorage.setItem("isFinalPay","true"); handlepay();} }>Final Payment </button>
                                
                                                     </TableCell>
                                  : val.bookingStatus ==="accept" && val.bookingDate <= today  && val.paymentDone==="yes" && val.serviceStatus === "ended"  && val.charges !=null && val.finalPay === "yes" && val.rating ==null

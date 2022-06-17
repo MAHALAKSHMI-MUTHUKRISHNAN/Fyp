@@ -29,7 +29,7 @@ const HomeRetail = () => {
           );
     };
     useEffect(()=>{
-    document.title= "watchService || Home"
+    document.title= "Fixmate || Home"
     getAllCenters();
     },[]);
     const [centers,setCenters]=useState([
@@ -82,13 +82,30 @@ const HomeRetail = () => {
                 <Card.Body>
                   <Card.Title>{center.name}</Card.Title>
                   <Card.Text>
-                    {center.details}
+                  <div class="m-4">
+    <div class="accordion" id="myAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">Details</button>									
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+                <div class="card-body">
+                  <p>{center.details}</p>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
                   </Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroupItem>PHONE : {center.mobile}</ListGroupItem>
-                  <ListGroupItem>MAIL ID : {center.email}</ListGroupItem>
+                  <ListGroupItem>CONTACT : {center.mobile}<br/>
+                  {center.email}</ListGroupItem>
                   <ListGroupItem>ADDRESS : {center.address}</ListGroupItem>
+                  <ListGroupItem>
+                  <iframe src={`http://maps.google.com/maps?q=${center.lattitude},${center.longitude}&output=embed`} height="70" width="200"></iframe></ListGroupItem> 
+                  {/* <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${center.lattitude},${center.longitude}&zoom=14&size=400x300&sensor=false&markers=color:red%7C${center.lattitude},${center.longitude}&key=AIzaSyDCw5MGvFFQRPYWUOs-Ik26g1mrhINMW_I`}></img> */}
                 </ListGroup>
 
                 <Card.Body style={{alignItems:"center"}}>

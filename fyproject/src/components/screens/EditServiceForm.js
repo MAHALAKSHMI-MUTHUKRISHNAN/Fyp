@@ -22,7 +22,7 @@ function EditServiceForm(){
       .max(10,'should be 10 number')
       .required('Phone Number is Required'),
     address:Yup.string()
-      .max(50, 'Must be 30 characters or less')
+      .max(100, 'Must be 30 characters or less')
       .required('Address is Required'),
     imageurl:Yup.string()
       .required('Image url required'),
@@ -30,7 +30,7 @@ function EditServiceForm(){
       .email('Email is invalid')
       .required('Email is required'),
     details: Yup.string()
-      .max(250, 'Must be 250 characters or less')
+      .max(500, 'Must be 250 characters or less')
       .required('Description is required'),
   })
   const isAdmin = localStorage.getItem("isAdmin");
@@ -53,6 +53,26 @@ function EditServiceForm(){
       }
     )
   }
+  const geoLocation = ()=>{
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(getCoordinates);
+    }
+    else{
+      alert("Not supported");
+    }
+  }
+  const lat = localStorage.getItem('lats');
+  const long = localStorage.getItem('longs');
+  const getCoordinates = (position) =>{
+    console.log(position.coords.latitude);
+   localStorage.setItem("longs",position.coords.longitude);
+   localStorage.setItem("lats",position.coords.latitude);
+    console.log(lat);
+    console.log(long);
+   window.location.reload();
+    
+  
+  }
   return (
     <>
     <ToastContainer/>
@@ -61,6 +81,8 @@ function EditServiceForm(){
         id:center.id,
         name:center.name,
         mobile: center.mobile,
+        lattitude : center.lattitude,
+        longitude : center.longitude,
         address:center.address,
         imageurl: center.imageurl,
         email: center.email,
